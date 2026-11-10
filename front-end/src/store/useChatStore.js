@@ -2,10 +2,6 @@ import { create } from "zustand";
 import {axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { useAuthStore } from "./useAuthStore.js";
-<<<<<<< HEAD
-
-=======
->>>>>>> 0375bdea59d4ba405226f3ef257a147c87e20e17
 
  
 export const useChatStore = create((set,get)=> ({
@@ -62,13 +58,6 @@ export const useChatStore = create((set,get)=> ({
         }
     },
 
-<<<<<<< HEAD
-    sendMessage:async(messageData) => {
-        const { selectedUser, messages } = get();
-        const { authUser } = useAuthStore.getState();
-
-        const tempId = `temp-${Date.now()}`;
-=======
     sendMessage: async (messageData) => {
         const { selectedUser, messages } = get();
         const { authUser } = useAuthStore.getState()
@@ -76,7 +65,6 @@ export const useChatStore = create((set,get)=> ({
         const currentMessages = Array.isArray(messages) ? messages : [];
 
         const tempId = `temp-${Date.now()}`
->>>>>>> 0375bdea59d4ba405226f3ef257a147c87e20e17
 
         const optimisticMessage = {
             _id:tempId,
@@ -85,7 +73,6 @@ export const useChatStore = create((set,get)=> ({
             text:messageData.text,
             image:messageData.image,
             createdAt: new Date().toISOString(),
-<<<<<<< HEAD
             isOptimistic:true,
         };
 
@@ -103,24 +90,4 @@ export const useChatStore = create((set,get)=> ({
         }
     },
 }))
-=======
-            isOptimistic:true
-        }
-        //immidetaly update the UI by adding the message
-        set({messages: [...currentMessages,optimisticMessage]});
-
-        try {
-            const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData);
-            // set({messages:messages.concat(res.data)});
-            // set({ messages: [...(messages || []), res.data] });
-            const updatedMessages = get().messages.map((msg) => 
-            msg._id === tempId ? res.data : msg
-        );
-        set({messages:updatedMessages});
-        } catch (error) {
-            toast.error(error.response?.data?.message || "Something went wrong");
-             set({messages:currentMessages})
-        }
-    },
-}));
->>>>>>> 0375bdea59d4ba405226f3ef257a147c87e20e17
+        
